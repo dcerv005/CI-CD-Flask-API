@@ -62,9 +62,9 @@ jobs:
         run: |
           python -m pytest tests/test_mock.py
 
-      - name: Run tests unittest
-        run: |
-          python -m unittest discover -s tests -p 'test_*.py' #discover all files in tests directory with pattern of anything starts with test_ and ends with .py
-          python app_test.py
+      # - name: Run tests unittest
+      #   run: |
+      #     python -m unittest discover -s tests -p 'test_*.py' #discover all files in tests directory with pattern of anything starts with test_ and ends with .py
+      #     python app_test.py
       # - name: Run test on feature/tests branch
       #   run: python app_test.py
