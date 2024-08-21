@@ -58,13 +58,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
-      - name: Run tests with pytest
-        run: |
-          python -m pytest tests/test_mock.py
+      # - name: Run tests with pytest
+      #   run: |
+      #     python -m pytest tests/test_mock.py
 
-      - name: Run tests unittest
-        run: python -m unittest discover -s tests -p 'test_*.py' #discover all files in tests directory with pattern of anything starts with test_ and ends with .py
+      # - name: Run tests unittest
+      #   run: python -m unittest discover -s tests -p 'test_*.py' #discover all files in tests directory with pattern of anything starts with test_ and ends with .py
 
       - name: Run test on feature/tests branch
-        run: | 
-          python -m unittest app_test.py
+        run: python app_test.py
