@@ -61,6 +61,7 @@ jobs:
       - name: Run tests with pytest
         run: |
           python -m pytest tests/test_mock.py
+          python -m pytest app_test.py
 
       # - name: Run tests unittest
       #   run: |

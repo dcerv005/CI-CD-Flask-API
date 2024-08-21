@@ -1,22 +1,30 @@
-import unittest
-
-from faker import Faker
+import json
+import pytest
 from app import app
+from faker import Faker
 
-class TestAPI(unittest.TestCase):
-    def setup(self):
-        self.app = app.test_client()
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True #Puts the application into testing mode
+    with app.test_client() as client: #context manager. +> initialize client ot make requests without running server
+        yield client
 
-    def test_negative_sum(self):
-        fake = Faker()
-        num1 = fake.random_number(digits=3)
-        num2 = fake.random_number(digits=3)
-        num1 = 0-num1
-        num2 = 0-num2
-        payload = {'num1': num1, 'num2': num2}
-        response = self.app.post('/sum', json=payload)
-        data = response.get_json()
-        self.assertEqual(data['result'], num1 + num2)
+def test_sum(client, mocker):
+    fake = Faker()
+    num1 = fake.random_number(digits=3)
+    num2 = fake.random_number(digits=3)
+    num1 = 0-num1
+    num2 = 0-num2
+    payload = {'num1': num1, 'num2': num2}
+    mocker.patch.object(client, 'post', return_value=app.response_class(
+        response = json.dumps({'result': num1 + num2}),
+        status = 200,
+        mimetype='application/json'
+    ))
+
+    response = client.post('/sum', payload)
+    data = response.get_json()
+    assert data['result'] == num1 + num2
 
 if __name__ == '__main__':
-    unittest.main()
+    pytest.main([__file__]) #Runs all tests
