@@ -1,6 +1,7 @@
 import unittest
-from app import app
+
 from faker import Faker
+from app import app
 
 class TestAPI(unittest.TestCase):
     def setup(self):
